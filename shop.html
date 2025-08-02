@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kéravie Boutique — Boutique</title>
+  <meta name="description" content="Découvrez les produits disponibles — Kéravie Boutique." />
+  <link rel="stylesheet" href="shop.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container nav">
+      <img class="brand" src="/boutique-image/logo-boutique.png" alt="">
+
+      <div class="nav__right">
+        <a href="#cart" class="cart-pill" aria-label="Voir mon panier">
+          Mon panier <span class="cart-count" id="cartCount">2</span>
+        </a>
+        <button class="btn btn-logout" type="button">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <h1 class="page-title ">Découvrez les produits disponibles</h1>
+
+    <!-- Grid -->
+    <section class="shop-grid" id="shopGrid">
+
+      <!-- Card 1 -->
+      <article class="shop-card" data-id="boudin-1m" data-price="1500" data-unit="DA">
+        <div class="shop-media">
+          <img src="/boutique-image/1m.jpg">
+        </div>
+        <h3 class="item-title">Boudin absorbant 1m</h3>
+        <p class="item-sub">Absorbe jusqu’à 8× son poids en hydrocarbures</p>
+        <div class="item-price">1500 DA</div>
+
+        <div class="shop-actions">
+          <button class="oval-btn" data-act="add">Ajouter au panier</button>
+          <div class="qty">
+            <button class="qty-btn" data-act="minus" aria-label="Diminuer">−</button>
+            <span class="qty-val" data-bind="qty">1</span>
+            <button class="qty-btn" data-act="plus" aria-label="Augmenter">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="shop-card" data-id="boudin-2m" data-price="2800" data-unit="DA">
+        <div class="shop-media">
+          <img src="/boutique-image/2m.jpg">
+        </div>
+        <h3 class="item-title">Boudin absorbant 2m</h3>
+        <p class="item-sub">Ultra absorbant — usage portuaire</p>
+        <div class="item-price">2800 DA</div>
+
+        <div class="shop-actions">
+          <button class="oval-btn" data-act="add">Ajouter au panier</button>
+          <div class="qty">
+            <button class="qty-btn" data-act="minus" aria-label="Diminuer">−</button>
+            <span class="qty-val" data-bind="qty">1</span>
+            <button class="qty-btn" data-act="plus" aria-label="Augmenter">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="shop-card" data-id="kit-special" data-price="5000" data-unit="DA">
+        <div class="shop-media">
+          <img src="/boutique-image/kit.png">
+        </div>
+        <h3 class="item-title">Notre Kit spécial</h3>
+        <p class="item-sub">3 boudins (1m chacun) + gants de protection</p>
+        <div class="item-price">5000 DA</div>
+
+        <div class="shop-actions">
+          <button class="oval-btn" data-act="add">Ajouter au panier</button>
+          <div class="qty">
+            <button class="qty-btn" data-act="minus" aria-label="Diminuer">−</button>
+            <span class="qty-val" data-bind="qty">1</span>
+            <button class="qty-btn" data-act="plus" aria-label="Augmenter">+</button>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    
+  <section class="report">
+    <div class="container">
+      <a  class="report-title serif" href="#problem">
+      <h2>Signaler un problème&nbsp;?</h2>
+      </a>
+    </div>
+  </section>
+  </main>
+
+  <footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <img src="/boutique-image/logo-boutique.png" alt="Kéravie Logo" class="footer-logo" />
+    </div>
+
+    <div class="footer-section links">
+      <h4>Liens utiles</h4>
+      <ul>
+        <li><a href="#Nos-coiffeurs">Acceuil</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section contact">
+      <h4>Contact</h4>
+      <p>Email : contact@keravie.dz</p>
+      <p>Téléphone : +213 123 456 789</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    &copy; 2025 Kéravie | Tous droits réservés
+  </div>
+</footer>
+
+  <script src="shop.js" defer></script>
+</body>
+</html>
