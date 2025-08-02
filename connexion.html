@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Connecter vous pour commander</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFFAE8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .back-arrow {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 24px;
+            height: 24px;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .back-arrow:hover {
+            transform: scale(1.1);
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .title {
+            color: #E76F51;
+            font-family: 'DM Serif Display', serif;
+            font-size: 24px;
+            font-weight: normal;
+            width: 100%;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 0;
+            padding: 40px;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            background-color: #f8f9fa;
+            border-radius: 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            color: #333;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            background-color: #e3f2fd;
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .submit-btn {
+            width: 70%;
+            background-color: #E76F51;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 0;
+            font-family: 'DM Serif Display', serif;
+            font-size: 16px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .submit-btn:hover {
+            background-color: #d45a3f;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .back-arrow {
+                left: 15px;
+                top: 15px;
+                width: 20px;
+                height: 20px;
+            }
+
+            .main-wrapper {
+                padding: 0 15px;
+            }
+
+            .header-section {
+                margin-bottom: 20px;
+            }
+
+            .title {
+                font-size: 20px;
+                text-align: center;
+            }
+
+            .container {
+                padding: 25px 20px;
+            }
+
+            .submit-btn {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .title {
+                text-align: center;
+                font-size: 16px;
+                width: 100%;
+            }
+
+            .form-group input {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .submit-btn {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+
+        /* Animation for form appearance */
+        .main-wrapper {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="/images/backArrow.png" alt="Back" class="back-arrow" onclick="returnToMainPage()">
+    
+    <div class="main-wrapper">
+        <div class="header-section">
+            <h1 class="title">Connecter vous pour commander</h1>
+        </div>
+                
+        <div class="container">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email professionnel</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                                
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                                
+                <button type="submit" class="submit-btn">Connexion</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Form submission handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+                        
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+                        
+            // Convert FormData to regular object
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+                        
+            // Validate all fields are filled
+            if (!data.email || !data.password) {
+                alert('Veuillez remplir tous les champs.');
+                return;
+            }
+                        
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                alert('Veuillez entrer une adresse email valide.');
+                return;
+            }
+                        
+            // Here you would typically send the data to your server for authentication
+            console.log('Login attempt with data:', data);
+                        
+            // Simulate successful login
+            alert('Connexion réussie !');
+                        
+            // In a real application, you would redirect to the main page or dashboard
+            // window.location.href = 'dashboard.html';
+        });
+
+        // Back button function
+        function returnToMainPage() {
+            // Redirect to main page
+            window.location.href = '/'; // Change this to your main page URL
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add focus effects to inputs
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+                                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

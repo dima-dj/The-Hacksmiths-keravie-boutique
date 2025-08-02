@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Demande de rendez-vous en visioconférence</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFFAE8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .back-arrow {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 24px;
+            height: 24px;
+            background-image: url('/images/backArrow.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .back-arrow:hover {
+            transform: scale(1.1);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: nowrap;
+        }
+
+        .title {
+            color: #E76F51;
+            font-family: 'DM Serif Display', serif;
+            font-size: 24px;
+            font-weight: normal;
+            line-height: 1.2;
+            white-space: nowrap;
+            flex-shrink: 1;
+        }
+
+
+        .video-icon {
+            width: 24px;
+            height: 24px;
+            background-image: url('/images/7115259_google_logo_meet_new_icon.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            flex-shrink: 0;
+        }
+
+        .description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #333;
+    line-height: 1.4;
+    margin-bottom: 25px;
+    text-align: left;
+    font-weight: 400;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 10px;
+}
+
+        .container {
+            background: white;
+            border-radius: 0;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            background-color: #f8f9fa;
+            border-radius: 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
+            transition: all 0.3s ease;
+            outline: none;
+            resize: vertical;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            max-height: 120px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            background-color: #e3f2fd;
+            transform: translateY(-1px);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #999;
+            font-weight: 300;
+        }
+
+        .submit-btn {
+            width: 60%;
+            background-color: #E76F51;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 0;
+            font-family: 'DM Serif Display', serif;
+            font-size: 16px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 25px auto 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .submit-btn:hover {
+            background-color: #d45a3f;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Success Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 0;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content::before {
+            content: '✉️';
+            font-size: 60px;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            color: #4caf50;
+            font-family: 'DM Serif Display', serif;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .modal-text {
+            color: #666;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .back-arrow {
+                left: 15px;
+                top: 15px;
+            }
+
+            .main-wrapper {
+                padding: 0 15px;
+            }
+
+            .title {
+                font-size: 18px;
+                white-space: normal;
+            }
+
+            .title-container {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .description {
+                font-size: 11px;
+                margin-bottom: 20px;
+                font-weight: 600;
+                max-width: 100%;
+                padding: 0 5px;
+            }
+
+            .container {
+                padding: 25px 20px;
+            }
+
+            .form-group {
+                margin-bottom: 18px;
+            }
+
+            .form-group label {
+                font-size: 12px;
+                font-weight: 400;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 10px 12px;
+                font-size: 13px;
+                font-weight: 300;
+            }
+
+            .submit-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .modal-content {
+                margin: 15% auto;
+                padding: 25px 20px;
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .title {
+                font-size: 18px;
+            }
+
+            .description {
+                font-size: 10px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+        }
+
+        /* Animation for form appearance */
+        .main-wrapper {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="back-arrow" onclick="returnToMainPage()"></div>
+    
+    <div class="main-wrapper">
+        <div class="header-section">
+            <div class="title-container">
+                <h1 class="title">Demande de rendez-vous en visioconférence</h1>
+                <div class="video-icon"></div>
+            </div>
+            <p class="description">
+                <br>Veuillez remplir ce formulaire afin que nous puissions organiser un rendez-vous personnalisé avec notre équipe.<br>
+                Nous vous contacterons rapidement par email pour fixer la date et vous envoyer le lien de connexion.
+            </p>
+        </div>
+                
+        <div class="container">
+            <form id="videoConferenceForm">
+                <div class="form-group">
+                    <label for="companyName">Nom de l'entreprise</label>
+                    <input type="text" id="companyName" name="companyName" required>
+                </div>
+                                
+                <div class="form-group">
+                    <label for="contactName">Nom du contact</label>
+                    <input type="text" id="contactName" name="contactName" required>
+                </div>
+                                
+                <div class="form-group">
+                    <label for="contactFirstName">Prénom du contact</label>
+                    <input type="text" id="contactFirstName" name="contactFirstName" required>
+                </div>
+                                
+                <div class="form-group">
+                    <label for="email">Adresse email professionnelle (obligatoire)</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                                
+                <div class="form-group">
+                    <label for="phone">Numéro de téléphone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                                
+                <div class="form-group">
+                    <label for="availability">Vos disponibilités pour une visioconférence</label>
+                    <textarea id="availability" name="availability" placeholder="Veuillez indiquer vos créneaux de disponibilité..." required></textarea>
+                </div>
+                                
+                <button type="submit" class="submit-btn">Valider</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Demande envoyée !</h2>
+            <p class="modal-text">
+                Votre demande de rendez-vous en visioconférence a été envoyée avec succès.
+                <br><br>
+                Nous vous enverrons un email avec tous les détails concernant votre rendez-vous, 
+                incluant la date, l'heure et le lien de connexion pour la visioconférence.
+            </p>
+            <button class="modal-btn" onclick="closeModalAndReturn()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Form submission handler
+        document.getElementById('videoConferenceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+                        
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+                        
+            // Convert FormData to regular object
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+                        
+            // Validate all fields are filled
+            const requiredFields = ['companyName', 'contactName', 'contactFirstName', 'email', 'phone', 'availability'];
+            let isValid = true;
+                        
+            requiredFields.forEach(field => {
+                if (!data[field] || data[field].trim() === '') {
+                    isValid = false;
+                }
+            });
+                        
+            if (!isValid) {
+                alert('Veuillez remplir tous les champs obligatoires.');
+                return;
+            }
+                        
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                alert('Veuillez entrer une adresse email valide.');
+                return;
+            }
+                        
+            // Show success modal
+            document.getElementById('successModal').style.display = 'block';
+                        
+            // Here you would typically send the data to your server
+            console.log('Video conference request submitted:', data);
+        });
+
+        // Return to main page function
+        function closeModalAndReturn() {
+            document.getElementById('successModal').style.display = 'none';
+            // Redirect to main page
+            window.location.href = '/'; // Change this to your main page URL
+        }
+
+        // Back button function
+        function returnToMainPage() {
+            // Redirect to main page
+            window.location.href = '/'; // Change this to your main page URL
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('successModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Add interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.01)';
+                });
+                                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
